@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 658399745674693391}
   - component: {fileID: -808510820377154387}
+  - component: {fileID: 5289253830207116132}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -53,7 +54,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: {fileID: 6263044215805460352}
   playerImage: {fileID: 8536192876753764113}
-  readyButton: {fileID: 8791037790363511594}
+  readyButton: {fileID: 824273197706200424}
+  ReadyButton: {fileID: 8791037790363511594}
+--- !u!114 &5289253830207116132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974198863193298708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &2203460880190045850
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,6 +304,8 @@ GameObject:
   - component: {fileID: 5890615166256111374}
   - component: {fileID: 3541591804233715249}
   - component: {fileID: 8791037790363511594}
+  - component: {fileID: 5119379797300739051}
+  - component: {fileID: 824273197706200424}
   m_Layer: 0
   m_Name: Player Ready
   m_TagString: Untagged
@@ -395,3 +426,44 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5119379797300739051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536878284045368421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: 0
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
+--- !u!114 &824273197706200424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536878284045368421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e464dcb5b9ad4446a853f8552bff838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 8791037790363511594}
+  photonView: {fileID: 5119379797300739051}

@@ -15,7 +15,7 @@ public class KakaoLogin : MonoBehaviour
     [SerializeField] private GameObject MainPage;
     [SerializeField] private Button NicknameButton;
 
-    // Flask 서버의 IP 주소와 포트를 변경
+    // Flask 서버의 IP 주소와 포트 지정
     private const string serverUrl = "http://172.10.7.41:80/sign_up";
 
     
@@ -78,10 +78,8 @@ public class KakaoLogin : MonoBehaviour
 
     private IEnumerator CheckLogin(string jsonRequestBody)
     {
-        // UnityWebRequest 생성 시 URL에 "https://"를 사용
         using (UnityWebRequest www = new UnityWebRequest(serverUrl, "POST"))
         {
-            
             // encoding 후 서버로 데이터 전송하기
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
             UploadHandlerRaw uH = new UploadHandlerRaw(bodyRaw);
@@ -93,6 +91,7 @@ public class KakaoLogin : MonoBehaviour
 
             yield return www.SendWebRequest();
 
+            // 서버로부터 응답이 왔을 때에 대한 처리
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("Request succeeded!");
@@ -100,7 +99,39 @@ public class KakaoLogin : MonoBehaviour
                 if (www.responseCode == 200)
                 {
                     byte[] resultData = www.downloadHandler.data;
-                    if (resultData == null) {
+
+                    if (resultData != null) {
+                        // JSON 형식의 응답을 문자열로 변환
+                        string resultJson = System.Text.Encoding.UTF8.GetString(resultData);
+
+                        // 응답을 담을 객체 생성
+                        ResultResponse resultResponse = JsonUtility.FromJson<ResultResponse>(resultJson);
+
+                        // 결과에 따라 처리
+                        if (resultResponse != null)
+                        {
+                            if (resultResponse.status)
+                            {
+                                // 닉네임 생성에 성공했을 경우
+                                PlayerPrefs.SetString("PlayerNickname", resultResponse.message);
+                                PlayerPrefs.Save();
+                                LoginPage.SetActive(false);
+                                MakeAccountPage.SetActive(false);
+                                MainPage.SetActive(true);
+                            }
+                            else
+                            {
+                                // 중복된 닉네임일 경우
+                                resultText.SetText("Duplicated Nickname!");
+                            }
+                        }
+                        
+                    }
+                    else {
+                        Debug.LogError("Response failed");
+                    }
+
+                    /*if (resultData == null) {
                         resultText.SetText("Duplicated Nickname!");
                     }
                     else {
@@ -120,7 +151,7 @@ public class KakaoLogin : MonoBehaviour
                         {
                             Debug.LogError("Error: resultText is null");
                         }
-                    }
+                    }*/
                 }
                 else
                 {
@@ -134,5 +165,10 @@ public class KakaoLogin : MonoBehaviour
         }
     }
     
-
+    [System.Serializable]
+    private class ResultResponse
+    {
+        public bool status;
+        public string message;
+    }
 }

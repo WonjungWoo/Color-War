@@ -34,8 +34,8 @@ public class Player : Photon.MonoBehaviour
     {
         if (photonView.isMine)
         {
-            CheckInput();
-            ClampPosition();
+            // CheckInput();
+            // ClampPosition();
         }
     }
 

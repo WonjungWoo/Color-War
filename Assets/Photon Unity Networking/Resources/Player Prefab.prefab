@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6396886221111664916}
   - component: {fileID: 4727219589721097776}
   - component: {fileID: 3334325967028881424}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Joystick Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 1866967122891512081}
   - component: {fileID: 229045394127547784}
   - component: {fileID: 6177704063671244330}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Joystick Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2760738671694985418}
   - component: {fileID: 3446083789076857690}
   - component: {fileID: 1492866018350208399}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Run Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,10 +327,10 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2467979753615966474}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.6039216, g: 0.9450981, b: 1, a: 1}
+  m_BackGroundColor: {r: 0.6039216, g: 0.7019608, b: 0.09019608, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -355,7 +355,7 @@ Camera:
   far clip plane: 1000
   field of view: 130.7
   orthographic: 1
-  orthographic size: 3000
+  orthographic size: 4000
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -401,7 +401,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7106869671552666011}
-  - component: {fileID: 8344206617510974654}
+  - component: {fileID: 5925539383779337574}
+  - component: {fileID: 904435070109421323}
+  - component: {fileID: 5004972045501521328}
   m_Layer: 0
   m_Name: Player Prefab
   m_TagString: Untagged
@@ -427,7 +429,26 @@ Transform:
   - {fileID: 6414164028779834071}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8344206617510974654
+--- !u!114 &5925539383779337574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509790579767229272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1878cc9600609164782479257f07a9b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photonView: {fileID: 8698200863212738064}
+  anim: {fileID: 8757138729265097932}
+  PlayerCamera: {fileID: 2467979753615966474}
+  sr: {fileID: 8163912040766336569}
+  rg: {fileID: 3452718846574132356}
+  MoveSpeed: 5
+  joystick: {fileID: 3334325967028881424}
+--- !u!114 &904435070109421323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,17 +464,96 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 4561994214152574244}
+  - {fileID: 6268636484065803521}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &5004972045501521328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509790579767229272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 4
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 4
+    InterpolateMoveTowardsAcceleration: 2
+    InterpolateMoveTowardsDeceleration: 2
+    InterpolateSpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -1
+        value: 0
+        inSlope: 0
+        outSlope: Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 4
+        value: 4
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+    DrawErrorGizmo: 1
+  m_RotationModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &5330340286272717833
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +566,7 @@ GameObject:
   - component: {fileID: 5120552174153618166}
   - component: {fileID: 8542210713078768111}
   - component: {fileID: 3816286136788752399}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Eat Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -586,7 +686,7 @@ GameObject:
   - component: {fileID: 8679897783797055281}
   - component: {fileID: 2137747572833979239}
   - component: {fileID: 798707520951183334}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GameCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -691,7 +791,7 @@ GameObject:
   - component: {fileID: 670605869523444847}
   - component: {fileID: 3390751928066343034}
   - component: {fileID: 1957528330948139379}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Color Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -815,7 +915,6 @@ GameObject:
   - component: {fileID: 3452718846574132356}
   - component: {fileID: 4561994214152574244}
   - component: {fileID: 6268636484065803521}
-  - component: {fileID: 4604152162348967222}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1084,54 +1183,3 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
---- !u!20 &4604152162348967222
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8881092324603654446}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.6039216, g: 0.9450981, b: 1, a: 1}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1960
-    height: 1080
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 130.7
-  orthographic: 1
-  orthographic size: 3000
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022

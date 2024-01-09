@@ -70,26 +70,32 @@ public class ColorGameManager : PunBehaviour
     public void SpawnPlayer()
     {
         Debug.Log("spawning");
-        foreach (PhotonPlayer player in PhotonNetwork.playerList)
-        {
-            // 각 플레이어의 위치는 랜덤으로 결정합니다.
-            float randomValuex = Random.Range(-17242f, 17242f);
-            float randomValuey = Random.Range(-14395f, 14395f);
 
-            GameObject newPlayer = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector2(randomValuex, randomValuey), Quaternion.identity, 0);
+        float randomValuex = Random.Range(-17242f, 17242f);
+        float randomValuey = Random.Range(-14395f, 14395f);
+
+        Debug.Log(PlayerPrefab.name);
+            GameObject newPlayer = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector3(randomValuex, randomValuey, 0), Quaternion.identity, 0);
+            StartCoroutine(wait());
+            Debug.Log(newPlayer == null);
             Color playerColor;
             if (TryGetPlayerColor(player, out playerColor))
             {
+
                 // 여기서 playerObject에 색상을 적용합니다.
-                newPlayer.GetComponent<SpriteRenderer>().color = playerColor;
+                newPlayer.GetComponentInChildren<SpriteRenderer>().color = playerColor;
             }
 
             // 플레이어의 카메라를 활성화합니다.
             newPlayer.GetComponent<Player>().EnablePlayerCamera();
-        }
 
         GameCanvas.SetActive(false);
         SceneCamera.SetActive(false);
+    }
+
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
 
     private bool TryGetPlayerColor(PhotonPlayer player, out Color color)

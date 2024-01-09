@@ -11,4 +11,5 @@ public class ColorButton : MonoBehaviour
         button.onClick.AddListener(() =>  ColorGameManager.Instance.SelectColor(button.image.color, button));
     }
 
+
 }

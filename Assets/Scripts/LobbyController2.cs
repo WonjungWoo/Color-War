@@ -19,7 +19,7 @@ public class LobbyController : MonoBehaviour {
     private List<RoomBox> roomItemsList = new List<RoomBox>();
 
     // Flask 서버의 IP 주소와 포트
-    private const string serverUrl = "http://172.10.7.41:80/search_room_list";
+    private const string serverUrl = "http://172.10.7.41:80/room_list";
 
     private void Awake()
     {

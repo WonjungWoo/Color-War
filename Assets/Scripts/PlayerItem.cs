@@ -5,13 +5,15 @@ using UnityEngine.UI;
 using Photon.Realtime;
 using TMPro;
 using Photon;
+using Unity.VisualScripting;
 
 
 public class PlayerItem : PunBehaviour
 {
     public TMP_Text playerName;
     public Image playerImage;
-    public Button readyButton;
+    public ReadyButtonSettings readyButton;
+    public Button ReadyButton;
     public PhotonPlayer player;
 
     private Button oldButton;
@@ -23,7 +25,7 @@ public class PlayerItem : PunBehaviour
         {
             playerProperties["isReady"] = true;
             PhotonNetwork.SetPlayerCustomProperties(playerProperties);
-            readyButton.gameObject.SetActive(false);
+            readyButton.EnableButton(ReadyButton);
         }
     }
 
@@ -50,14 +52,14 @@ public class PlayerItem : PunBehaviour
 
     public void ApplyLocalChanges()
     {
-        readyButton.interactable = true;
+        ReadyButton.interactable = true;
     }
 
 
     public void SetPlayercolor(Color colorname)
     {
         playerImage.color = colorname;
-        playerProperties["color"] = colorname;
+        playerProperties["color"] = new Vector3(colorname.r, colorname.g, colorname.b);
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
@@ -73,8 +75,13 @@ public class PlayerItem : PunBehaviour
             if (changedProps.ContainsKey("color"))
             {
                 // 변경된 색상으로 UI 업데이트
-                Color newColor = (Color)changedProps["color"];
-                playerImage.color = newColor;
+                Vector3 newColor = (Vector3)changedProps["color"];
+                playerImage.color = new Color(newColor.x, newColor.y, newColor.z);
+
+                if (PhotonNetwork.playerList.Length == 2)
+                {
+                    oldButton.interactable = false;
+                }
             }
         }
     }

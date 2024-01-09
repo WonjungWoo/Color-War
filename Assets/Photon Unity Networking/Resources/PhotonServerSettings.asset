@@ -45,4 +45,5 @@ MonoBehaviour:
   - TaggedPlayer
   - FlipFalse
   - FlipTrue
+  - EnableButton
   DisableAutoOpenWizard: 1

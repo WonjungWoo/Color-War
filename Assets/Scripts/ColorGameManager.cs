@@ -26,7 +26,14 @@ public class ColorGameManager : PunBehaviour
 
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
+        ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+
         UpdatePlayerList();
+        foreach (PhotonPlayer player in PhotonNetwork.playerList)
+        {
+            playerProperties["isReady"] = false;
+            PhotonNetwork.SetPlayerCustomProperties(playerProperties);
+        }
     }
 
     public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
@@ -82,7 +89,8 @@ public class ColorGameManager : PunBehaviour
         object colorValue;
         if (player.CustomProperties.TryGetValue("color", out colorValue))
         {
-            color = (Color)colorValue;
+            Vector3 colorVector = (Vector3)colorValue;
+            color = new Color(colorVector.x, colorVector.y, colorVector.z);
             return true;
         }
 
@@ -122,18 +130,31 @@ public class ColorGameManager : PunBehaviour
     }
     public void SelectColor(Color color, Button colorButton)
     {
-        PlayerItem currentPlayerItem = FindPlayerItem(PhotonNetwork.player);
-
-        if (currentPlayerItem != null)
+        if (PhotonNetwork.playerList.Length == 2)
         {
-            currentPlayerItem.SetPlayercolor(color);
-            if (currentPlayerItem.GetOldButton() != null)
+            PlayerItem currentPlayerItem = FindPlayerItem(PhotonNetwork.player);
+
+            if (currentPlayerItem != null)
             {
-                currentPlayerItem.GetOldButton().interactable = true;
+                currentPlayerItem.SetPlayercolor(color);
+                if (currentPlayerItem.GetOldButton() != null)
+                {
+                    currentPlayerItem.GetOldButton().interactable = true;
+                }
+                currentPlayerItem.SetOldButton(colorButton);
+                colorButton.interactable = false;
             }
-            currentPlayerItem.SetOldButton(colorButton);
-            colorButton.interactable = false;
         }
+        else 
+        {
+            PlayerItem currentPlayerItem = FindPlayerItem(PhotonNetwork.player);
+
+            if (currentPlayerItem != null)
+            {
+                currentPlayerItem.SetPlayercolor(color);
+            }
+        }
+
     }
 
     // PhotonPlayer 객체를 기반으로 PlayerItem 인스턴스를 찾는 메소드

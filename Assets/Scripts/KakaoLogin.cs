@@ -69,7 +69,7 @@ public class KakaoLogin : MonoBehaviour
             Debug.Log("Wrong input!");
         }
         else{
-             // 데이터를 JSON 형식으로 생성
+            // 데이터를 JSON 형식으로 생성
             string jsonRequestBody = $"{{\"userid\":\"{userid}\", \"nickname\":\"{nickname}\"}}";
             Debug.Log("start checklogin");
             StartCoroutine(CheckLogin(jsonRequestBody));

@@ -13,6 +13,7 @@ public class Npc : Photon.MonoBehaviour
     public float rotationSpeed = 100.0f; // 회전 속도
 
     private bool isWalking = false;
+    public int uniqueID;
 
     void Start()
     {

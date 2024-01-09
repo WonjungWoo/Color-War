@@ -55,7 +55,7 @@ public class ColorGameManager : PunBehaviour
         }
     }
 
-    private PlayerPrefs newPlayer;
+
     public void SpawnPlayer()
     {
         foreach (PhotonPlayer player in PhotonNetwork.playerList)
@@ -64,7 +64,7 @@ public class ColorGameManager : PunBehaviour
             float randomValuex = Random.Range(-17242f, 17242f);
             float randomValuey = Random.Range(-14395f, 14395f);
 
-            newPlayer = new PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector2(randomValuex, randomValuey), Quaternion.identity, 0);
+            GameObject newPlayer = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector2(randomValuex, randomValuey), Quaternion.identity, 0);
             Color playerColor;
             if (TryGetPlayerColor(player, out playerColor))
             {

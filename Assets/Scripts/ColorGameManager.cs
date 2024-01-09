@@ -20,12 +20,36 @@ public class ColorGameManager : PunBehaviour
     public PlayerItem playerItemPrefab;
     public Transform playerItemParent;
     [SerializeField] private Button startButton;
+    public int npc_num;
+    private int nextUniqueID = 1;
+    [SerializeField] private Npc NPC;
+    public GameObject NPCPrefab;
 
     private void Awake()
     {
         Instance = this;
         GameCanvas.SetActive(true);
         UpdatePlayerList();
+
+        for (int i = 0; i < npc_num; i++)
+        {
+            SpawnNPC();
+        }
+    }
+
+    private void SpawnNPC()
+    {
+        float randomValuex = Random.Range(-17242f, 17242f);
+        float randomValuey = Random.Range(-14395f, 14395f);
+
+        Vector3 spawnPosition = new Vector3(randomValuex, randomValuey, 0f); // 무작위 위치 생성
+
+        GameObject newNPC = Instantiate(NPCPrefab, spawnPosition, Quaternion.identity);
+
+        // NPC의 고유 ID 설정
+        Npc npcScript = newNPC.GetComponent<Npc>();
+        npcScript.uniqueID = nextUniqueID; // 고유 ID 생성 또는 할당
+        nextUniqueID += 1;
     }
 
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
@@ -75,11 +99,11 @@ public class ColorGameManager : PunBehaviour
         float randomValuey = Random.Range(-14395f, 14395f);
 
         Debug.Log(PlayerPrefab.name);
-            GameObject newPlayer = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector3(randomValuex, randomValuey, 0), Quaternion.identity, 0);
+            GameObject newPlayer = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector3(randomValuex, randomValuey, -150), Quaternion.identity, 0);
             StartCoroutine(wait());
             Debug.Log(newPlayer == null);
             Color playerColor;
-            if (TryGetPlayerColor(player, out playerColor))
+            if (TryGetPlayerColor(PhotonNetwork.player, out playerColor))
             {
 
                 // 여기서 playerObject에 색상을 적용합니다.

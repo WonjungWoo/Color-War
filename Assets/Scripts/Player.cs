@@ -34,8 +34,8 @@ public class Player : Photon.MonoBehaviour
     {
         if (photonView.isMine)
         {
-            // CheckInput();
-            // ClampPosition();
+            CheckInput();
+            ClampPosition();
         }
     }
 
@@ -75,8 +75,13 @@ public class Player : Photon.MonoBehaviour
 
         // 플레이어의 위치를 경계 내로 제한
         float clampedX = Mathf.Clamp(transform.position.x, leftBound, rightBound);
-        float clampedY = Mathf.Clamp(transform.position.y, TopBound, BottomBound);
+        float clampedY = Mathf.Clamp(transform.position.y, BottomBound, TopBound);
         transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+    }
+
+    public void ChangeSpeed(int speed)
+    {
+        MoveSpeed = speed;
     }
 
     [PunRPC]

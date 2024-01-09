@@ -1,42 +1,58 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
+public class VirtualJoystick : MonoBehaviour
 {
-    [SerializeField] private RectTransform joystickBackground;
-    [SerializeField] private RectTransform joystickHandle;
+    [SerializeField] private GameObject joystickBackground;
+    [SerializeField] private GameObject joystickHandle;
+    public Vector2 joystickVec;
+    private Vector2 joystickTouchPos;
+    private Vector2 joystickOriginalPos;
+    private float joystickRadius;
 
-    private void Start()
+    void Start()
     {
-        joystickBackground = GetComponent<RectTransform>();
-        joystickHandle = transform.GetChild(0).GetComponent<RectTransform>(); // 핸들은 첫 번째 자식으로 가정
+        Debug.Log("joystick operating");
+        joystickOriginalPos = joystickBackground.transform.position;
+        joystickRadius = joystickBackground.GetComponent<RectTransform>().sizeDelta.y / 4;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public void OnDrag(BaseEventData eventData)
     {
-        Vector2 position = RectTransformUtility.WorldToScreenPoint(Camera.main, joystickBackground.position);
-        Vector2 radius = joystickBackground.sizeDelta / 2;
-        Vector2 input = (eventData.position - position) / radius;
+        Debug.Log("Joystick drag");
+        PointerEventData pointerEventData = eventData as PointerEventData;
+        Vector2 dragPos = pointerEventData.position;
+        joystickVec = (dragPos - joystickTouchPos).normalized;
 
-        input = (input.magnitude > 1.0f) ? input.normalized : input;
+        float joystickDist = Vector2.Distance(dragPos, joystickTouchPos);
 
-        // 핸들의 위치를 조정
-        joystickHandle.anchoredPosition = input * radius;
+        if (joystickDist < joystickRadius)
+        {
+            joystickHandle.transform.position = joystickTouchPos + joystickVec * joystickDist;
+        }
+        else
+        {
+            joystickHandle.transform.position = joystickTouchPos + joystickVec * joystickRadius;
+        }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        OnDrag(eventData);
+    public void OnPointerDown()
+    {   
+        Debug.Log("Joystick clicked");
+        joystickHandle.transform.position = Input.mousePosition;
+        joystickTouchPos = Input.mousePosition;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp()
     {
-        joystickHandle.anchoredPosition = Vector2.zero;
+        joystickVec = Vector2.zero;
+        joystickHandle.transform.position = joystickOriginalPos;
+        joystickBackground.transform.position = joystickOriginalPos;
     }
 
     // 조이스틱의 입력 값을 게임에 전달하는 메소드
     public Vector2 GetInputDirection()
     {
-        return joystickHandle.anchoredPosition / (joystickBackground.sizeDelta / 2);
+        return joystickVec;
     }
 }

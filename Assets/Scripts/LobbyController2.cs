@@ -38,6 +38,7 @@ public class LobbyController : MonoBehaviour {
         StartCoroutine(GetRoomsListFromServer());
     }
 
+    // 서버에 현재 생성되어 있는 방 목록 요청
     private IEnumerator GetRoomsListFromServer()
     {
         using (UnityWebRequest www = new UnityWebRequest(serverUrl, "POST"))
@@ -86,6 +87,7 @@ public class LobbyController : MonoBehaviour {
         
     }
 
+    // 요청받은 방 목록 데이터를 parsing
     private List<(string, string)> ParseRoomsJson(string json)
     {
         List<(string, string)> rooms = new List<(string, string)>();
@@ -109,7 +111,6 @@ public class LobbyController : MonoBehaviour {
 
         return rooms;
     }
-
 
     [Serializable]
     public class RoomListResponse

@@ -15,11 +15,14 @@ public class LobbyController : MonoBehaviour {
     [SerializeField] private GameObject NewRoomButton;
     [SerializeField] private RoomBox roomEntryPrefab;
     [SerializeField] private Transform contentPanel;
+    
+    [SerializeField] private TMP_InputField searchname;
 
     private List<RoomBox> roomItemsList = new List<RoomBox>();
 
     // Flask 서버의 IP 주소와 포트
-    private const string serverUrl = "http://172.10.7.41:80/search_room_list";
+    private const string roomListServerUrl = "http://172.10.7.41:80/room_list";
+    private const string searchRoomServerUrl = "http://172.10.7.41:80/search_room";
 
     private void Awake()
     {
@@ -28,20 +31,17 @@ public class LobbyController : MonoBehaviour {
         //set User Name
         PhotonNetwork.playerName = PlayerPrefs.GetString("PlayerNickname", "");
 
-        //PopulateRooms(RequestRoomsList());
         RequestRoomsList();
     }
 
     private void RequestRoomsList() {
-        List<(string, string)> roomsList = new List<(string, string)>();
-
         StartCoroutine(GetRoomsListFromServer());
     }
 
     // 서버에 현재 생성되어 있는 방 목록 요청
     private IEnumerator GetRoomsListFromServer()
     {
-        using (UnityWebRequest www = new UnityWebRequest(serverUrl, "POST"))
+        using (UnityWebRequest www = new UnityWebRequest(roomListServerUrl, "POST"))
         {
             string jsonRequestBody = $"{{}}";
             // encoding 후 서버로 데이터 전송하기
@@ -56,7 +56,6 @@ public class LobbyController : MonoBehaviour {
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-
                 if (www.responseCode == 200)
                 {
                     string jsonResponse = www.downloadHandler.text;
@@ -85,6 +84,57 @@ public class LobbyController : MonoBehaviour {
             }
         }
         
+    }
+
+    public void SearchRoom() {
+        string jsonRequestBody = $"{{\"searchname\":\"{searchname.text}\"}}";
+        StartCoroutine(GetSearchRoomsFromServer(jsonRequestBody));
+    }
+
+    // 서버에 현재 검색한 이름의 방 목록 요청
+    private IEnumerator GetSearchRoomsFromServer(string jsonRequestBody)
+    {
+        using (UnityWebRequest www = new UnityWebRequest(searchRoomServerUrl, "POST"))
+        {
+            // encoding 후 서버로 데이터 전송하기
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
+            UploadHandlerRaw uH = new UploadHandlerRaw(bodyRaw);
+            DownloadHandlerBuffer dH = new DownloadHandlerBuffer();
+            www.uploadHandler = uH;
+            www.downloadHandler = dH;
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                if (www.responseCode == 200)
+                {
+                    string jsonResponse = www.downloadHandler.text;
+                    List<(string, string)> rooms = ParseRoomsJson(jsonResponse);
+                    PopulateRooms(rooms);
+                }
+                else
+                {
+                    Debug.LogError("Error: Unexpected response code - " + www.responseCode);
+                }
+            }
+            // 서버로부터 응답을 수신하는 데 실패한 경우
+            else
+            {
+                Debug.LogError("Error: " + www.error);
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("Error: " + www.error);
+            }
+            else
+            {
+                string jsonResponse = www.downloadHandler.text;
+                List<(string, string)> rooms = ParseRoomsJson(jsonResponse);
+            }
+        }
     }
 
     // 요청받은 방 목록 데이터를 parsing

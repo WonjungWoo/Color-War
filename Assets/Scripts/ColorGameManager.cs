@@ -4,9 +4,13 @@ using Photon;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
+
 
 public class ColorGameManager : PunBehaviour
 {
+    // Flask 서버의 IP 주소와 포트
+    private const string serverUrl = "http://172.10.7.41:80/delete_room";
     public static ColorGameManager Instance;
     public GameObject PlayerPrefab;
     public GameObject GameCanvas;
@@ -65,6 +69,7 @@ public class ColorGameManager : PunBehaviour
 
     public void SpawnPlayer()
     {
+        Debug.Log("spawning");
         foreach (PhotonPlayer player in PhotonNetwork.playerList)
         {
             // 각 플레이어의 위치는 랜덤으로 결정합니다.
@@ -78,6 +83,9 @@ public class ColorGameManager : PunBehaviour
                 // 여기서 playerObject에 색상을 적용합니다.
                 newPlayer.GetComponent<SpriteRenderer>().color = playerColor;
             }
+
+            // 플레이어의 카메라를 활성화합니다.
+            newPlayer.GetComponent<Player>().EnablePlayerCamera();
         }
 
         GameCanvas.SetActive(false);
@@ -103,11 +111,69 @@ public class ColorGameManager : PunBehaviour
     {   
         if (PhotonNetwork.room.PlayerCount == 1) {
             //request the server to remove the room from the list
-            //PhotonNetwork.room.Name이 현재 방의 이름
+            string jsonRequestBody = $"{{\"roomname\":\"{PhotonNetwork.room.Name}\"}}";
+            StartCoroutine(DeleteRoomFromServer(jsonRequestBody));
         }
         PhotonNetwork.LeaveRoom();
         Debug.Log("room left");
         PhotonNetwork.LoadLevel("Main Menu");
+    }
+
+    // 서버에 방 삭제를 요청
+    private IEnumerator DeleteRoomFromServer(string jsonRequestBody)
+    {
+        using (UnityWebRequest www = new UnityWebRequest(serverUrl, "POST"))
+        {
+            // encoding 후 서버로 데이터 전송하기
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
+            UploadHandlerRaw uH = new UploadHandlerRaw(bodyRaw);
+            DownloadHandlerBuffer dH = new DownloadHandlerBuffer();
+            www.uploadHandler = uH;
+            www.downloadHandler = dH;
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                if (www.responseCode == 200)
+                {
+                    byte[] resultData = www.downloadHandler.data;
+
+                    if (resultData != null) {
+                        Debug.Log("ch1");
+                        // JSON 형식의 응답을 문자열로 변환
+                        string resultJson = System.Text.Encoding.UTF8.GetString(resultData);
+
+                        // 응답을 담을 객체 생성
+                        ResultResponse resultResponse = JsonUtility.FromJson<ResultResponse>(resultJson);
+
+                        // 결과에 따라 처리
+                        if (resultResponse != null)
+                        {
+                            Debug.Log("zzz");
+                            // 삭제 여부에 따른 메시지 출력
+                            Debug.Log(resultResponse.message);
+                        }
+                    }
+                    else {
+                        Debug.LogError("Response failed");
+                    }
+                }
+            }
+            // 서버로부터 응답을 수신하는 데 실패한 경우
+            else
+            {
+                Debug.LogError("Error: " + www.error);
+            }
+        }
+    }
+
+    [System.Serializable]
+    private class ResultResponse
+    {
+        public bool status;
+        public string message;
     }
 
     public override void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)

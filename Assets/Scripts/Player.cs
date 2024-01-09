@@ -16,13 +16,19 @@ public class Player : Photon.MonoBehaviour
     public VirtualJoystick joystick; 
 
     // Start is called before the first frame update
-    private void Awake()
+    private void Start()
     {
         if (photonView.isMine)
         {
             PlayerCamera.SetActive(true);
         }
     }
+
+    public void EnablePlayerCamera()
+    {
+        PlayerCamera.SetActive(true);
+    }
+
 
     private void Update()
     {

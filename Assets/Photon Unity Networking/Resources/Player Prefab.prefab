@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4893159103462989012}
   - component: {fileID: 6396886221111664916}
   - component: {fileID: 4727219589721097776}
-  - component: {fileID: 3334325967028881424}
   m_Layer: 0
   m_Name: Joystick Background
   m_TagString: Untagged
@@ -76,21 +75,74 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3334325967028881424
+--- !u!1 &1062130789911776654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6081012360290617692}
+  - component: {fileID: 912842974983021567}
+  - component: {fileID: 2253627446690250661}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6081012360290617692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062130789911776654}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1745.5254, y: 548.6801, z: 143.00879}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7106869671552666011}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &912842974983021567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020957482428953752}
+  m_GameObject: {fileID: 1062130789911776654}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 565cc316ddf31644f854e06ea99d2a4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystickBackground: {fileID: 4893159103462989012}
-  joystickHandle: {fileID: 1866967122891512081}
-  joystickVec: {x: 0, y: 0}
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &2253627446690250661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062130789911776654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1 &2071400559760518132
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +177,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -852.9998, y: 405}
+  m_AnchoredPosition: {x: -853, y: 405}
   m_SizeDelta: {x: 230, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &229045394127547784
@@ -178,6 +230,7 @@ GameObject:
   - component: {fileID: 2760738671694985418}
   - component: {fileID: 3446083789076857690}
   - component: {fileID: 1492866018350208399}
+  - component: {fileID: 8329367592269650660}
   m_Layer: 0
   m_Name: Run Button
   m_TagString: Untagged
@@ -286,6 +339,51 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8329367592269650660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2218514236221039362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2938588176741510824}
+          m_TargetAssemblyTypeName: PlayerAction, Assembly-CSharp
+          m_MethodName: OnButtonUpRun
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2938588176741510824}
+          m_TargetAssemblyTypeName: PlayerAction, Assembly-CSharp
+          m_MethodName: OnButtonDownRun
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2467979753615966474
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +522,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6081012360290617692}
   - {fileID: 3339400000171164379}
   - {fileID: 8365556072265810487}
   - {fileID: 6414164028779834071}
@@ -446,7 +545,7 @@ MonoBehaviour:
   PlayerCamera: {fileID: 2467979753615966474}
   sr: {fileID: 8163912040766336569}
   rg: {fileID: 3452718846574132356}
-  MoveSpeed: 5
+  MoveSpeed: 1000
   joystick: {fileID: 2990648546375199329}
 --- !u!114 &904435070109421323
 MonoBehaviour:
@@ -722,22 +821,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2990648546375199329}
-          m_TargetAssemblyTypeName: VirtualJoystick, Assembly-CSharp
-          m_MethodName: OnPointerDown
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 3
     callback:
       m_PersistentCalls:
@@ -784,7 +867,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickBackground: {fileID: 1020957482428953752}
   joystickHandle: {fileID: 2071400559760518132}
-  joystickVec: {x: 0, y: 0}
+  playerCamera: {fileID: 8526011337185288050}
+  joystickVec: {x: 0, y: 0, z: 0}
 --- !u!1 &8123170741244006733
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +881,7 @@ GameObject:
   - component: {fileID: 8679897783797055281}
   - component: {fileID: 2137747572833979239}
   - component: {fileID: 798707520951183334}
+  - component: {fileID: 2938588176741510824}
   m_Layer: 0
   m_Name: GameCanvas
   m_TagString: Untagged
@@ -890,6 +975,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2938588176741510824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8123170741244006733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc41395f3445534098226d2a8273be0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 4493324113154068979}
 --- !u!1 &8803356056330408865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,8 +1215,8 @@ MonoBehaviour:
   PlayerCamera: {fileID: 2467979753615966474}
   sr: {fileID: 8163912040766336569}
   rg: {fileID: 3452718846574132356}
-  MoveSpeed: 5
-  joystick: {fileID: 3334325967028881424}
+  MoveSpeed: 1000
+  joystick: {fileID: 2990648546375199329}
 --- !u!114 &8698200863212738064
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,13 +25,13 @@ public class PlayerAction : MonoBehaviour
     {
         Debug.Log("Press");
         isButtonPressed = true;
-        player.ChangeSpeed(10);
+        player.ChangeSpeed(3500);
     }
 
     public void OnButtonUpRun()
     {
         Debug.Log("Up");
         isButtonPressed = false;
-        player.ChangeSpeed(5);
+        player.ChangeSpeed(1000);
     }
 }

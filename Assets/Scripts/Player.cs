@@ -21,7 +21,9 @@ public class Player : Photon.MonoBehaviour
         if (photonView.isMine)
         {
             PlayerCamera.SetActive(true);
+            
         }
+        StartCoroutine(CheckDistanceWithClosestNPCCoroutine());
     }
 
     public void EnablePlayerCamera()
@@ -77,6 +79,41 @@ public class Player : Photon.MonoBehaviour
         float clampedX = Mathf.Clamp(transform.position.x, leftBound, rightBound);
         float clampedY = Mathf.Clamp(transform.position.y, BottomBound, TopBound);
         transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+    }
+
+    private IEnumerator CheckDistanceWithClosestNPCCoroutine()
+    {
+        while (true) {
+            {
+                yield return new WaitForSeconds(0.5f);
+
+                CheckDistanceWithClosestNPC();
+            }
+        }
+    }
+
+    private void CheckDistanceWithClosestNPC()
+    {
+        GameObject[] npcs = GameObject.FindGameObjectsWithTag("NPC");
+
+        float closestDistance = float.MaxValue;
+        GameObject closestNPC = null;
+
+        foreach (GameObject npc in npcs)
+        {
+            float distance = Vector2.Distance(transform.position, npc.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestNPC = npc;
+            }
+        }
+
+        if (closestNPC != null && closestDistance <= 4000f)
+        {
+            Debug.Log($"Closest NPC: {closestNPC.name}, Distance: {closestDistance}");
+        }
     }
 
     public void ChangeSpeed(int speed)

@@ -79,8 +79,7 @@ MonoBehaviour:
   anim: {fileID: 8757138729265097932}
   sr: {fileID: 8163912040766336569}
   rg: {fileID: 3452718846574132356}
-  walkSpeed: 5
-  rotationSpeed: 100
+  walkSpeed: 1000
   uniqueID: 0
 --- !u!114 &1950971213701193663
 MonoBehaviour:
@@ -267,7 +266,6 @@ MonoBehaviour:
   sr: {fileID: 8163912040766336569}
   rg: {fileID: 3452718846574132356}
   walkSpeed: 5
-  rotationSpeed: 100
   uniqueID: 0
 --- !u!114 &8698200863212738064
 MonoBehaviour:

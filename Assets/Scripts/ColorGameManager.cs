@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.EventSystems;
 
 
 public class ColorGameManager : PunBehaviour
@@ -22,7 +23,6 @@ public class ColorGameManager : PunBehaviour
     [SerializeField] private Button startButton;
     public int npc_num;
     private int nextUniqueID = 1;
-    [SerializeField] private Npc NPC;
     public GameObject NPCPrefab;
 
     private void Awake()
@@ -44,7 +44,7 @@ public class ColorGameManager : PunBehaviour
 
         Vector3 spawnPosition = new Vector3(randomValuex, randomValuey, 0f); // 무작위 위치 생성
 
-        GameObject newNPC = Instantiate(NPCPrefab, spawnPosition, Quaternion.identity);
+        GameObject newNPC = PhotonNetwork.Instantiate(NPCPrefab.name, spawnPosition, Quaternion.identity, 0);
 
         // NPC의 고유 ID 설정
         Npc npcScript = newNPC.GetComponent<Npc>();
@@ -93,6 +93,7 @@ public class ColorGameManager : PunBehaviour
 
     public void SpawnPlayer()
     {
+        
         Debug.Log("spawning");
 
         float randomValuex = Random.Range(-17242f, 17242f);
@@ -112,7 +113,6 @@ public class ColorGameManager : PunBehaviour
 
             // 플레이어의 카메라를 활성화합니다.
             newPlayer.GetComponent<Player>().EnablePlayerCamera();
-
         GameCanvas.SetActive(false);
         SceneCamera.SetActive(false);
     }

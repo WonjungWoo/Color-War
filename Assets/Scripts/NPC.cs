@@ -9,10 +9,10 @@ public class Npc : Photon.MonoBehaviour
 
     public Rigidbody2D rg;
 
-    public float walkSpeed = 5.0f; // 걷기 속도
-    public float rotationSpeed = 100.0f; // 회전 속도
+    public float walkSpeed = 1000.0f; // 걷기 속도
 
     private bool isWalking = false;
+    private Vector2 moveDirection; // 움직일 방향을 저장할 변수
     public int uniqueID;
 
     void Start()
@@ -25,7 +25,7 @@ public class Npc : Photon.MonoBehaviour
         if (isWalking)
         {
             // NPC가 걷고 있으면 전진
-            transform.Translate(Vector2.up * walkSpeed * Time.deltaTime);
+            transform.Translate(moveDirection * walkSpeed * Time.deltaTime);
 
             // 맵 경계 체크 후 보정
             ClampPosition();
@@ -38,30 +38,26 @@ public class Npc : Photon.MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(5.0f, 10.0f)); // 5~10초 동안 대기
 
-            isWalking = true;
             anim.SetBool("isMove", true);
-            yield return new WaitForSeconds(Random.Range(1.0f, 5.0f)); // 1~5초 동안 걷기
+            // 무작위 방향 설정
+            moveDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
 
-            isWalking = false;
-            anim.SetBool("isMove", false);
-
-            // 무작위로 회전
-            transform.Rotate(Vector3.forward, Random.Range(0.0f, 360.0f));
-
-            // 현재 회전 각도 가져오기
-            float currentRotation = transform.rotation.eulerAngles.z;
-
-            // 회전 각도가 0에서 180도 사이에 있는 경우 (오른쪽 방향)
-            if (currentRotation >= 0.0f && currentRotation <= 180.0f)
+            if (moveDirection.x > 0)
             {
-                // NPC의 이동 방향이 x값이 양수입니다.
+                sr.flipX = false;
                 photonView.RPC("FlipFalse", PhotonTargets.AllBuffered);
             }
             else
             {
-                // NPC의 이동 방향이 x값이 음수입니다.
+                sr.flipX = true;
                 photonView.RPC("FlipTrue", PhotonTargets.AllBuffered);
             }
+
+            isWalking = true;
+            yield return new WaitForSeconds(Random.Range(5.0f, 10.0f)); // 5~10초 동안 걷기
+
+            anim.SetBool("isMove", false);
+            isWalking = false;
         }
     }
 

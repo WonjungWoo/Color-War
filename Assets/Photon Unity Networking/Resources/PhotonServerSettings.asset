@@ -47,4 +47,5 @@ MonoBehaviour:
   - FlipTrue
   - EnableButton
   - DisableButton
+  - SetMoveDirection
   DisableAutoOpenWizard: 1

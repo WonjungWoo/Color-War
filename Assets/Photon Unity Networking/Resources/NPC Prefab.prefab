@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1950971213701193663}
   m_Layer: 0
   m_Name: NPC Prefab
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +81,7 @@ MonoBehaviour:
   rg: {fileID: 3452718846574132356}
   walkSpeed: 1000
   uniqueID: 0
+  whichColored: 0
 --- !u!114 &1950971213701193663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,8 +266,9 @@ MonoBehaviour:
   anim: {fileID: 8757138729265097932}
   sr: {fileID: 8163912040766336569}
   rg: {fileID: 3452718846574132356}
-  walkSpeed: 5
+  walkSpeed: 1000
   uniqueID: 0
+  whichColored: 0
 --- !u!114 &8698200863212738064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +344,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &4561994214152574244
 MonoBehaviour:
   m_ObjectHideFlags: 0

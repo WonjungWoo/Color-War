@@ -15,22 +15,31 @@ public class Npc : Photon.MonoBehaviour
     private Vector2 moveDirection; // 움직일 방향을 저장할 변수
     public int uniqueID;
 
+    public bool whichColored = false;
+
     void Start()
     {
-        StartCoroutine(WalkRandomly());
+        if (photonView.isMine)
+        {
+            StartCoroutine(WalkRandomly());
+        }
     }
 
     void Update()
     {
-        if (isWalking)
+        if (photonView.isMine)
         {
-            // NPC가 걷고 있으면 전진
-            transform.Translate(moveDirection * walkSpeed * Time.deltaTime);
+            if (isWalking)
+            {
+                // NPC가 걷고 있으면 전진
+                transform.Translate(moveDirection * walkSpeed * Time.deltaTime);
 
-            // 맵 경계 체크 후 보정
-            ClampPosition();
+                // 맵 경계 체크 후 보정
+                ClampPosition();
+            }
         }
     }
+
 
     IEnumerator WalkRandomly()
     {
@@ -78,6 +87,21 @@ public class Npc : Photon.MonoBehaviour
 
         // 보정된 위치로 이동
         transform.position = new Vector3(clampedX, clampedY, currentPosition.z);
+    }
+
+    public void SetWhichColored(bool value)
+    {
+        whichColored = value;
+    }
+
+    public bool GetWhichColored()
+    {
+        return whichColored;
+    }
+
+    public void setnpcColor(Color color)
+    {
+        sr.color = color;
     }
 
     [PunRPC]

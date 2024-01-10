@@ -39,17 +39,20 @@ public class ColorGameManager : PunBehaviour
 
     private void SpawnNPC()
     {
+        if (PhotonNetwork.isMasterClient)
+    {
         float randomValuex = Random.Range(-17242f, 17242f);
         float randomValuey = Random.Range(-14395f, 14395f);
 
-        Vector3 spawnPosition = new Vector3(randomValuex, randomValuey, 0f); // 무작위 위치 생성
+        Vector3 spawnPosition = new Vector3(randomValuex, randomValuey, 0f);
 
         GameObject newNPC = PhotonNetwork.Instantiate(NPCPrefab.name, spawnPosition, Quaternion.identity, 0);
 
         // NPC의 고유 ID 설정
         Npc npcScript = newNPC.GetComponent<Npc>();
-        npcScript.uniqueID = nextUniqueID; // 고유 ID 생성 또는 할당
+        npcScript.uniqueID = nextUniqueID;
         nextUniqueID += 1;
+    }
     }
 
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
@@ -93,7 +96,11 @@ public class ColorGameManager : PunBehaviour
 
     public void SpawnPlayer()
     {
-        
+        // if (PhotonNetwork.room.PlayerCount > 1)
+        //     {
+        //         Debug.Log("Another player already spawned.");
+        //         return; // 다른 플레이어가 이미 스폰되었으면 종료
+        //     }
         Debug.Log("spawning");
 
         float randomValuex = Random.Range(-17242f, 17242f);
@@ -111,8 +118,6 @@ public class ColorGameManager : PunBehaviour
                 newPlayer.GetComponentInChildren<SpriteRenderer>().color = playerColor;
             }
 
-            // 플레이어의 카메라를 활성화합니다.
-            newPlayer.GetComponent<Player>().EnablePlayerCamera();
         GameCanvas.SetActive(false);
         SceneCamera.SetActive(false);
     }
@@ -232,6 +237,7 @@ public class ColorGameManager : PunBehaviour
 
             if (currentPlayerItem != null)
             {
+
                 currentPlayerItem.SetPlayercolor(color);
                 if (currentPlayerItem.GetOldButton() != null)
                 {

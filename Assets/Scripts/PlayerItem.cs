@@ -63,6 +63,11 @@ public class PlayerItem : PunBehaviour
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
+    public Color GetPlayercolor()
+    {
+        return playerImage.color;
+    }
+
     public override void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
     {
         PhotonPlayer changedPlayer = playerAndUpdatedProps[0] as PhotonPlayer;

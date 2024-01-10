@@ -86,9 +86,9 @@ KAIST 우원정
 - 모든 플레이어가 준비 버튼을 누르면 시작 버튼 생성
 - 시작 버튼을 누르면 본 게임 화면으로 이동 가능
 
+  
 
-
-![image](https://github.com/WonjungWoo/Color-War/assets/37200748/341aa3c7-f400-4872-8012-20bd00e5e720)
+![KakaoTalk_Video_2024-01-10-19-53-04-ezgif com-video-to-gif-converter](https://github.com/WonjungWoo/Color-War/assets/37200748/fef0cbef-4067-45cd-a6e7-c785cbf7540e)
 
 ###3.2. 본 게임 화면
 - 플레이어 2명과 npc 15명 생성

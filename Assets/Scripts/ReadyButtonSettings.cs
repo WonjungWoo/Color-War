@@ -18,7 +18,7 @@ public class ReadyButtonSettings : Photon.MonoBehaviour
     }
 
     [PunRPC]
-    private void DisableButton(Button button)
+    public void DisableButton(Button button)
     {
         button.gameObject.SetActive(false);
     }
